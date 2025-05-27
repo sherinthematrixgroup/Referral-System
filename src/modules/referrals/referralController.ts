@@ -8,7 +8,6 @@ export const getReferrals = async (req: Request, res: Response) => {
   res.json(referrals);
 };
 
-// Get all referral userIds for a given user
 export const getReferralUserIds = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
@@ -24,14 +23,12 @@ export const getReferralUserIds = async (req: Request, res: Response) => {
   }
 };
 
-// Get referral history for a user
 export const getReferralHistory = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const referrals = await Referral.find({ referrer: userId }).populate("referred");
   res.json(referrals);
 };
 
-// Get total earnings for a user
 export const getTotalEarnings = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const referrals = await Referral.find({ referrer: userId });
@@ -39,7 +36,6 @@ export const getTotalEarnings = async (req: Request, res: Response) => {
   res.json({ totalPoints });
 };
 
-// Get earnings for a specific referral
 export const getReferralEarnings = async (req: Request, res: Response) => {
   const { userId, referralId } = req.params;
   const referral = await Referral.findOne({ referrer: userId, referred: referralId });
@@ -47,14 +43,12 @@ export const getReferralEarnings = async (req: Request, res: Response) => {
   res.json({ rewardGiven: referral.rewardGiven });
 };
 
-// Get all transactions under a specific referral
 export const getReferralTransactions = async (req: Request, res: Response) => {
   const { userId, referralId } = req.params;
   const transactions = await Referral.find({ referrer: userId, referred: referralId });
   res.json(transactions);
 };
 
-// Get details of a specific transaction
 export const getTransactionDetail = async (req: Request, res: Response) => {
   const { userId, referralId, transactionId } = req.params;
   const transaction = await Referral.findOne({
