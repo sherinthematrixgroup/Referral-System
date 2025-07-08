@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
 import { Request, Response } from "express";
 import { Referral } from "../referrals/referralModel";
+import { ObjectId } from "mongodb";
 
 export const getReferrals = async (req: Request, res: Response) => {
   const { userId } = req.params;
@@ -13,7 +13,7 @@ export const getReferralUserIds = async (req: Request, res: Response) => {
 
   try {
     const referrals = await Referral.find({
-      referrer: new mongoose.Types.ObjectId(userId),
+      referrer: new ObjectId(userId),
     }).select("referred");
 
     const referralUserIds = referrals.map((ref) => ref.referred);

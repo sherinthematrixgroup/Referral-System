@@ -1,0 +1,24 @@
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import { User } from "../modules/Users/userModel";
+
+const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
+
+export const loginUser = async (email: string, password: string) => {
+  const user = await User.findOne({ email }).select("+password");
+  if (!user) {
+    throw new Error("Invalid credentials");
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error("Invalid credentials");
+  }
+
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
+  return { user, token };
+};
+
+export const generateToken = (userId: string) => {
+  return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: "7d" });
+};

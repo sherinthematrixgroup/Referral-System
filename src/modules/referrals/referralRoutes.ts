@@ -27,8 +27,4 @@ router.get("/:userId/earnings/:referralId", asyncHandler(getReferralEarnings));
 router.get("/:userId/earnings/:referralId/transactions", asyncHandler(getReferralTransactions));
 router.get("/:userId/earnings/:referralId/transactions/:transactionId", asyncHandler(getTransactionDetail));
 
-router.get("/ping", (req, res) => {
-  res.send("Referral route is active!");
-});
 export { router as referralRoutes };
-// This code defines the referral routes for the application. It includes routes for fetching referral history, earnings, and transactions related to referrals. The routes are defined using Express.js and are exported for use in the main application file.
